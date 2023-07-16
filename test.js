@@ -1,6 +1,6 @@
 const request = require('supertest');
 const { expect } = require('chai');
-const app = require('./Webbsidan/AdminPage/adminPage'); // Uppdatera sökvägen till filen som skapar din Express-app
+const app = require('adminPage'); // Uppdatera sökvägen till filen som skapar din Express-app
 module.exports = request
 
 describe('POST /api/tabort', () => {
