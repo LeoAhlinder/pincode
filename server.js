@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http').createServer(app);
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'Webbsidan', 'PinCode')));
@@ -95,11 +94,17 @@ app.post('/api/tid', function (req, res) {
                 if (error){
                   console.log(error)
                 }else{
+                  if (Typ == 4){
+                    res.json({message:"time"})
+                  }
                   newData(Typ,namn,data.dag,Tid)
                 }
               });
             } //Table exist, just insert the data
             else{
+              if (Typ == 4){
+                res.json({message:"time"})
+              }
               newData(Typ,namn,data.dag,Tid)
             }
           })
@@ -144,17 +149,33 @@ function newData(Typ,namn,dag,Tid)
       if (error){
         console.log(error)
       }
+      else{
+        connection.query("SELECT * FROM ?? WHERE datum = ?",[namn,dag],function(error,results){
+          if (error){
+            console.log(error)
+          }
+          else{
+            const time = results[0];
+            app.get("/api/time",function(req,res){
+              res.json({message:time})
+            })
+          }
+        })
+      }
     })
   }
 }
 
 app.post("/api/ny-anvandare",function(req,res){
     const data = req.body;
-    console.log(data.Namn,data.Kod)
-    const query = "INSERT INTO personal (namn,kod) VALUES (?,?)"
-    connection.query(query,[data.Namn,data.Kod],function(error,results,fields){
+    console.log(data.Namn,data.Kod,data.lon)
+    const query = "INSERT INTO personal (namn,kod,lon) VALUES (?,?,?)"
+    connection.query(query,[data.Namn,data.Kod,data.lon],function(error,results,fields){
       if (error){
         console.log("Error: ", error);
+      }
+      else{
+        res.json({message:"true"})
       }
     });
 });

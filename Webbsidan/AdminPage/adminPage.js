@@ -44,6 +44,7 @@ async function NyAnvändare(){
 
     var Namn = document.getElementById("name").value;
     var Kod = document.getElementById("kod").value;
+    var lon = document.getElementById("lon").value;
     if (Kod.length != 4){
         alert("Koden måste vara 4 siffror lång")
         document.getElementById("name").value = "";
@@ -52,7 +53,8 @@ async function NyAnvändare(){
         var data = {
             Namn: Namn,
             Kod: Kod,
-            month:month
+            month:month,
+            lon:lon
         }
         try {
         console.log(JSON.stringify(data))
@@ -65,7 +67,7 @@ async function NyAnvändare(){
                 body: JSON.stringify(data),
             });
             const response = await res.json()
-            if (response.ok){
+            if (response.message == "true"){
                 document.getElementById("name").value = "";
                 document.getElementById("kod").value = "";
                 window.location.reload();
@@ -184,5 +186,3 @@ async function taBort(namn){
     }
     
 }
-
-module.exports = taBort;

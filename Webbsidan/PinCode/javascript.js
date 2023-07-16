@@ -98,6 +98,9 @@ async function Tid(Typ){
         }  else if (response.message == "newTable"){
           newTable();
         }
+        else if (response.message == "time") {
+          lon()
+        }
         else {
           // Error storing data
           console.log('Error storing data:', response.statusText);
@@ -108,31 +111,23 @@ async function Tid(Typ){
   }
 }
 
-const nodemailer = require("nodemailer")
-
-const data = "test"
-
-function newTable(){
-  const transporter = nodemailer.createTransport({
-    host: "smtp.forwardemail.net",
-    port: 465,
-    secure: true,
-    auth: {
-      // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-      user: 'REPLACE-WITH-YOUR-ALIAS@YOURDOMAIN.COM',
-      pass: 'REPLACE-WITH-YOUR-GENERATED-PASSWORD'
+async function lon(){
+  const res = await fetch("/api/time",{
+    method:"GET",
+    headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     }
   });
-  
-  // async..await is not allowed in global scope, must use a wrapper
-  async function main() {
-    // send mail with defined transport object
-    const info = await transporter.sendMail({
-      from: '"Leo" <ahlinder.leo@gmail.com>', // sender address
-      to: "ahlinder.leo@icloud.com", // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: data, // plain text body
-    });
+  const response = await res.json()
+
+  const time = {
+    borjade: response.message.började,
+    rastIn: response.message.börjaderast,
+    rastUt:response.message.slutaderast,
+    slutade:response.message.slutade
+  }
+  console.log(time)
 }
-}
+
 
