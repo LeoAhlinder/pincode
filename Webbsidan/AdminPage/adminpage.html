@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="adminPage.js"></script>
+    <script src="Database.js"></script>
+    <link rel="stylesheet" href="adminStyle.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+</head>
+<body>
+    <button onclick="Back()"> Back</button>
+    <script>
+        function Back(){
+            window.location.href = "/index.html"
+        }
+    </script>
+    <div class="login">
+            <label for="fname">namn:</label>
+            <input type="text" id="nameAdmin" name="fname"><br><br>
+            <label for="lösenord">lösenord:</label>
+            <input type="password" id="lösenordAdmin" name="lname"><br><br>
+            <button onclick="AdminLogin()">Submit</button>
+    </div>
+</body>
+</html>

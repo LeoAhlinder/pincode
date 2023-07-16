@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PIN</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="javascript.js"></script>
+  <script src="Database.js"></script>
+</head>
+<body>
+  <button onclick="openAdminPage()">Admin</button>
+
+  <script>
+    function openAdminPage() {
+      window.location.href = "/admin/adminpage.html";
+    }
+  </script>
+  <div class="container" type="button">
+    <h1 class="Header">PIN</h1>
+    <form>
+        <div class="grid-container" type="button">
+            <button onclick="PIN(1)" type="button" class="PinButton"><div  class="grid-item">1</div></button>
+            <button onclick="PIN(2)" type="button" class="PinButton"><div  class="grid-item">2</div></button>
+            <button onclick="PIN(3)" type="button" class="PinButton"><div  class="grid-item">3</div></button>
+            <button onclick="PIN(4)" type="button" class="PinButton"><div class="grid-item">4</div></button>
+            <button onclick="PIN(5)" type="button" class="PinButton"><div class="grid-item">5</div></button>
+            <button onclick="PIN(6)" type="button" class="PinButton"><div class="grid-item">6</div></button>
+            <button onclick="PIN(7)" type="button" class="PinButton"><div class="grid-item">7</div></button>
+            <button onclick="PIN(8)" type="button" class="PinButton"><div class="grid-item">8</div></button>
+            <button onclick="PIN(9)" type="button" class="PinButton"><div class="grid-item">9</div></button>
+            <button onclick="PIN(9)" type="button" class="PinButton"><div class="grid-item">  </div></button>
+            <button onclick="PIN(0)" type="button" class="PinButton"><div class="grid-item">0</div></button>
+            <button type="button" onclick="PIN(91)" class="PinButton"><div class="grid-item undo-icon"></div></button>
+
+          </div>
+      <input type="password" class="PIN" id="pinCode">
+      <button class="button" type="button" onclick="Tid(1)">In</button>
+      <button class="button" type="button" onclick="Tid(2)">Rast In</button>
+      <button class="button" type="button" onclick="Tid(3)">Rast Ut</button>
+      <button class="button" type="button" onclick="Tid(4)">Ut</button>
+    </form>
+  </div>
+</body>
+</html>

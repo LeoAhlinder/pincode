@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="adminPage.js"></script>
+    <link rel="stylesheet" href="adminStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nya Personer</title>
+</head>
+<body onload="personal()">
+    <label for="fname">Namn:</label>
+    <input type="text" id="name"><br><br>
+    <label for="lname">Kod:</label>
+    <input type="text" id="kod"><br><br>
+    <label>Lön:</label>
+    <input type="text" id="lon"><br><br>
+    <button onclick="NyAnvändare()">Skapa ny användare</button>
+    <br>
+    <button onclick="tb()">Tillbaka</button>
+    <p class="personal" id="personal"></p>
+
+    <script>
+        function tb(){
+            window.location.href = "adminpage.html";
+        }
+    </script>
+</body>
+</html>

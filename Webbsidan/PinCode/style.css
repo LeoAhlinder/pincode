@@ -1,0 +1,87 @@
+
+body {
+    background: rgb(10, 5, 79);
+    background: radial-gradient(circle, rgba(10, 5, 79, 1) 0%, rgba(9, 9, 116, 1) 90%);
+}
+
+.Header{
+    color: white;
+}
+.container {
+  text-align: center;
+  margin-top: 100px;
+}
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #ffffff;
+  padding: 1px;
+  width: 60%;
+  align-self: center;
+  margin: 0 auto; /* Added to center the grid horizontally */
+  border-radius: 5px;
+  grid-gap: 4px;
+  background-color: transparent;
+}
+
+.grid-item {
+  background-color: transparent; /* Transparent background */
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  border: none;
+  outline: none;
+}
+
+.PIN{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 2.25%;
+    height: 25px;
+    resize: none;
+}
+.undo-icon::before {
+    content: "\2190"; /* Unicode character for left arrow */
+  }
+
+.PinButton{
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 20px;
+  font: inherit;
+  font-size: 1.6rem;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px #000;
+}
+
+.PinButton :hover{
+  transform: scale(1.5, 1.5);
+  -ms-transform: scale(1.5, 1.5); /* IE 9 */
+  -webkit-transform: scale(1.5, 1.5);
+  
+}
+
