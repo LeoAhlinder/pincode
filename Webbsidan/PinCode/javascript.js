@@ -128,6 +128,9 @@ async function lon(){
     slutade:response.message.slutade
   }
   console.log(time)
+
+  
+
 }
 
 
