@@ -105,7 +105,7 @@ async function Tid(Typ){
           // Error storing data
           console.log('Error storing data:', response.statusText);
         }
-      }catch{
+      }catch (error){
         console.error(error)
       }
   }
