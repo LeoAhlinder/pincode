@@ -129,6 +129,23 @@ async function lon(){
   }
   console.log(time)
 
+  var t = time.borjade.split(":");
+  var s = time.slutade.split(":");
+  var timmar = (parseInt(s[0]) - 1 - parseInt(t[0]));
+  var min = (parseInt(s[1]) + 60  - parseInt(t[1]));
+
+  var x = time.rastIn.split(":");
+  var z = time.rastUt.split(":");
+  var rasti = (parseInt(z[0]) - 1 - parseInt(x[0]));
+  var rastu = (parseInt(z[1]) + 60  - parseInt(x[1]));
+
+  console.log(timmar,min)
+  console.log(rasti,rastu)
+
+  var tim = timmar - rasti
+  var mi = min - rastu
+
+  console.log(tim,mi)
   
 
 }
