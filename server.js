@@ -7,15 +7,15 @@ const http = require('http').createServer(app);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, 'Webbsidan', 'PinCode')));
 
   // Serve index.html
 app.get('/', function (req, res) {
- res.sendFile(path.join(__dirname,'index.html'));
+ res.sendFile(path.join(__dirname, 'Webbsidan', 'PinCode', 'index.html'));
 });
 
 // Serve AdminPage
-app.use('/admin', express.static(path.join(__dirname)));
+app.use('/admin', express.static(path.join(__dirname, 'Webbsidan', 'AdminPage')));
 
 const connection = mysql.createConnection({
     host: 'localhost',
