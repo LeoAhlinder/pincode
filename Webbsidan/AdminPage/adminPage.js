@@ -98,7 +98,7 @@ async function AdminLogin() {
         const result = await res.json();
         
         if (result.message == "Admin exist") {
-            window.location.href = "AddNewUsers.html";
+            window.location.href = "addnewusers.html";
         } else if (result.message == "Admin does not exist") {
             alert("Finns ingen admin med detta inlogg.");
         }
