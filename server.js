@@ -4,10 +4,12 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http').createServer(app);
+const morgan = require("morgan");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'Webbsidan', 'PinCode')));
+app.use(morgan("dev"))
 
   // Serve index.html
 app.get('/', function (req, res) {
@@ -195,7 +197,6 @@ app.post("/api/ny-anvandare",validateRequiredFields(["Namn","Kod","lon"]),functi
 
 app.post("/api/adminpage",validateRequiredFields(["namn","kod"]),function(req,res){
    const admin = req.body;
-   console.log(req.body)
    const query = "SELECT * FROM admins WHERE (Namn,Lösenord) = (?,?)"
    connection.query(query,[admin.namn,admin.kod],function(error,results,fields){
     if (error){
@@ -219,3 +220,5 @@ app.post("/api/lon",validateRequiredFields(["namn","betalt","datum"]),function(r
     }
   })
 })
+
+module.exports = app;

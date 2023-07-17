@@ -1,36 +1,40 @@
-const request = require('supertest');
-const { expect } = require('chai');
-const app = require('adminPage'); // Uppdatera sökvägen till filen som skapar din Express-app
-module.exports = request
+const supertest = require('supertest');
+const chai = require('chai');
+const server = require('./server'); // Adjust the path to your server.js file
 
-describe('POST /api/tabort', () => {
-  it('ska returnera ett svar med status 200 när data finns och tas bort', (done) => {
-    const testData = { namn: 'leo' };
+const request = supertest.agent(server);
+const expect = chai.expect;
 
-    request(app)
-      .post('/api/tabort')
-      .send(testData)
+describe('POST /api/adminpage', () => {
+  it('should respond with "Admin exist" when valid admin credentials are provided', (done) => {
+    const admin = {
+      namn: 'validAdminName',
+      kod: 'validAdminPassword'
+    };
+
+    request.post('/api/adminpage')
+      .send(admin)
       .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-
-        expect(res.body).to.deep.equal({ status: 'success', data: 'Data to remove successfully.' });
-        done();
-      });
+      .expect((res) => {
+        expect(res.body.message).to.equal('Admin exist');
+      })
+      .end(done);
   });
 
-  it('ska returnera ett svar med status 404 när data inte finns', (done) => {
-    const testData = { namn: 'idk' };
+  it('should respond with "Admin does not exist" when invalid admin credentials are provided', (done) => {
+    const admin = {
+      namn: 'invalidAdminName',
+      kod: 'invalidAdminPassword'
+    };
 
-    request(app)
-      .post('/api/tabort')
-      .send(testData)
-      .expect(404)
-      .end((err, res) => {
-        if (err) return done(err);
-
-        expect(res.body).to.deep.equal({ status: 'error', message: 'Data not found.' });
-        done();
-      });
+    request.post('/api/adminpage')
+      .send(admin)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.message).to.equal('Admin does not exist');
+      })
+      .end(done);
   });
+
+  // Add more test cases for other scenarios if needed
 });
