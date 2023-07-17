@@ -39,14 +39,25 @@ http.listen(3000, () => {
 });
 
 
-app.get("/api/personal",function(req,res){
+function validateRequiredFields(requiredFields) {
+  return function (req, res, next) {
+    for (const field of requiredFields) {
+      if (!req.body[field]) {
+        return res.status(400).json({ error: `Missing required field: ${field}` });
+      }
+    }
+    next();
+  };
+}
+
+app.get("/api/personal",validateRequiredFields([]),function(req,res){
   connection.query("SELECT Namn FROM personal",function(error,results){
     res.send(results)
   })
 })
 
 
-app.post("/api/tabort",function(req,res){
+app.post("/api/tabort",validateRequiredFields(['namn']),function(req,res){
   const data = req.body;
 
   connection.query("DELETE FROM personal WHERE Namn = ?",[data.namn],function(error,results){
@@ -59,7 +70,7 @@ app.post("/api/tabort",function(req,res){
 })
 
 
-app.post('/api/tid', function (req, res) {
+app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"]), function (req, res) {
     const data = req.body; 
     const Tid = data.tid;
     const month = data.month
@@ -168,7 +179,7 @@ function newData(Typ,namn,dag,Tid)
   }
 }
 
-app.post("/api/ny-anvandare",function(req,res){
+app.post("/api/ny-anvandare",validateRequiredFields(["Namn","Kod","lon"]),function(req,res){
     const data = req.body;
     console.log(data.Namn,data.Kod,data.lon)
     const query = "INSERT INTO personal (namn,kod,lon) VALUES (?,?,?)"
@@ -182,7 +193,7 @@ app.post("/api/ny-anvandare",function(req,res){
     });
 });
 
-app.post("/api/adminpage",function(req,res){
+app.post("/api/adminpage",validateRequiredFields(["namn","kod"]),function(req,res){
    const admin = req.body;
    console.log(req.body)
    const query = "SELECT * FROM admins WHERE (Namn,Lösenord) = (?,?)"
@@ -199,10 +210,8 @@ app.post("/api/adminpage",function(req,res){
    })
 })
   
-app.post("/api/lon",function(req,res){
+app.post("/api/lon",validateRequiredFields(["namn","betalt","datum"]),function(req,res){
   const data = req.body;
-  console.log(data.betalt,data.datum,data.namn)
-  
 
   connection.query("UPDATE ?? SET betalt = ? WHERE datum = ?",[data.namn,data.betalt,data.datum],function(error,results){
     if (error){
