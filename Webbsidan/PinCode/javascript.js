@@ -117,6 +117,9 @@ async function Tid(Typ){
 
 async function lon(lon){
 
+  let today = new Date();
+  let day = today.getDate(); 
+
   const res = await fetch("/api/time",{
     method:"GET",
     headers:{
@@ -126,13 +129,13 @@ async function lon(lon){
   });
   const response = await res.json()
 
+  const namn = response.namn;
   const time = {
     borjade: response.message.började,
     rastIn: response.message.börjaderast,
     rastUt:response.message.slutaderast,
     slutade:response.message.slutade
   }
-  console.log(time)
 
   let t = time.borjade.split(":");
   let s = time.slutade.split(":");
@@ -148,13 +151,28 @@ async function lon(lon){
   const tim = timmar - rasti;
   const mi = min - rastu;
 
-  console.log(tim,mi)
   
   const totalTime = ((tim * 60) + mi)/60;
 
-  console.log(totalTime * lon);
+  const betalt = totalTime * lon;
 
+  var data = {
+    betalt:betalt,
+    datum: day,
+    namn,namn
+  }
 
+  const resp = await fetch("/api/lon",{
+    method:"POST",
+    headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  const svar = resp.json();
+
+  console.log(svar)
 
 }
 

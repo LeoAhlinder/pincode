@@ -87,7 +87,7 @@ app.post('/api/tid', function (req, res) {
                 "börjaderast VARCHAR(255)",
                 "slutaderast VARCHAR(255)",
                 "slutade VARCHAR(255)",
-                "Betalt INT(52)"
+                "betalt INT(52)"
               ];
               
               const createTableQuery = `CREATE TABLE ?? (${columns.join(', ')})`;
@@ -159,7 +159,7 @@ function newData(Typ,namn,dag,Tid)
           else{
             const time = results[0];
             app.get("/api/time",function(req,res){
-              res.json({message:time})
+              res.json({message:time,namn:namn})
             });
           }
         });
@@ -199,3 +199,14 @@ app.post("/api/adminpage",function(req,res){
    })
 })
   
+app.post("/api/lon",function(req,res){
+  const data = req.body;
+  console.log(data.betalt,data.datum,data.namn)
+  
+
+  connection.query("UPDATE ?? SET betalt = ? WHERE datum = ?",[data.namn,data.betalt,data.datum],function(error,results){
+    if (error){
+      console.log(error)
+    }
+  })
+})
