@@ -24,6 +24,7 @@ const connection = mysql.createConnection({
     database: 'testnärvaro',
 });
 
+
 connection.connect((error) => {
     if(error){
       console.log('Error connecting to the MySQL Database');
@@ -73,6 +74,7 @@ app.post('/api/tid', function (req, res) {
           // Data already exists in the table
           const user = results[0];
           const namn = user.Namn + " " + month;
+          const lon = user.lon;
           
           connection.query("SELECT * FROM ??",[namn],function(error,results){
             if (error){
@@ -84,7 +86,8 @@ app.post('/api/tid', function (req, res) {
                 "började VARCHAR(255)",
                 "börjaderast VARCHAR(255)",
                 "slutaderast VARCHAR(255)",
-                "slutade VARCHAR(255)"
+                "slutade VARCHAR(255)",
+                "Betalt INT(52)"
               ];
               
               const createTableQuery = `CREATE TABLE ?? (${columns.join(', ')})`;
@@ -94,7 +97,7 @@ app.post('/api/tid', function (req, res) {
                   console.log(error)
                 }else{
                   if (Typ == 4){
-                    res.json({message:"time"})
+                    res.json({message:"time",lon:lon})
                   }
                   newData(Typ,namn,data.dag,Tid)
                 }
@@ -102,7 +105,7 @@ app.post('/api/tid', function (req, res) {
             } //Table exist, just insert the data
             else{
               if (Typ == 4){
-                res.json({message:"time"})
+                res.json({message:"time",lon:lon})
               }
               newData(Typ,namn,data.dag,Tid)
             }
@@ -157,11 +160,11 @@ function newData(Typ,namn,dag,Tid)
             const time = results[0];
             app.get("/api/time",function(req,res){
               res.json({message:time})
-            })
+            });
           }
-        })
+        });
       }
-    })
+    });
   }
 }
 
@@ -174,7 +177,7 @@ app.post("/api/ny-anvandare",function(req,res){
         console.log("Error: ", error);
       }
       else{
-        res.json({message:"true"})
+        res.json({message:"true",lon:data.lon})
       }
     });
 });

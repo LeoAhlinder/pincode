@@ -127,7 +127,6 @@ async function personal(){
 
             for (let key in obj){
                 if (obj.hasOwnProperty(key)){
-                    console.log(obj[key])
                     personal.push(obj[key])
                 }
             }
@@ -184,11 +183,5 @@ async function taBort(namn){
     }else{
         alert("Error")
     }
-    
 }
-const express = require('express');
-const app = express();
 
-// Define your routes and middleware here
-
-module.exports = app;

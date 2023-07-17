@@ -1,4 +1,3 @@
-
 var pinCodeNumbers = 0;
 var code = 0;
 var pInput = document.getElementById("pinCode");
@@ -8,7 +7,10 @@ function PIN(number) {
   var currentPin = pinInput.value;
   if (number === 91) {
     pinInput.value = currentPin.slice(0, -1);
-    pinCodeNumbers--;
+    if (pinCodeNumbers > 0){
+      pinCodeNumbers--;
+      console.log(pinInput.value)
+    }
   } else if (pinCodeNumbers < 4) {
     pinCodeNumbers++;
     pinInput.value = currentPin + number;
@@ -83,6 +85,7 @@ async function Tid(Typ){
 
     pInput = "";
     try{
+
       const res = await fetch("api/tid",{
         method:"POST",
         headers:{
@@ -98,8 +101,8 @@ async function Tid(Typ){
         }  else if (response.message == "newTable"){
           newTable();
         }
-        else if (response.message == "time") {
-          lon()
+        else if (response.message == "time"){
+          lon(response.lon);
         }
         else {
           // Error storing data
@@ -111,7 +114,9 @@ async function Tid(Typ){
   }
 }
 
-async function lon(){
+
+async function lon(lon){
+
   const res = await fetch("/api/time",{
     method:"GET",
     headers:{
@@ -129,25 +134,27 @@ async function lon(){
   }
   console.log(time)
 
-  var t = time.borjade.split(":");
-  var s = time.slutade.split(":");
-  var timmar = (parseInt(s[0]) - 1 - parseInt(t[0]));
-  var min = (parseInt(s[1]) + 60  - parseInt(t[1]));
+  let t = time.borjade.split(":");
+  let s = time.slutade.split(":");
+  let timmar = (parseInt(s[0]) - 1 - parseInt(t[0]));
+  let min = (parseInt(s[1]) + 60  - parseInt(t[1]));
 
-  var x = time.rastIn.split(":");
-  var z = time.rastUt.split(":");
-  var rasti = (parseInt(z[0]) - 1 - parseInt(x[0]));
-  var rastu = (parseInt(z[1]) + 60  - parseInt(x[1]));
+  let x = time.rastIn.split(":");
+  let z = time.rastUt.split(":");
+  let rasti = (parseInt(z[0]) - 1 - parseInt(x[0]));
+  let rastu = (parseInt(z[1]) + 60  - parseInt(x[1]));
 
-  console.log(timmar,min)
-  console.log(rasti,rastu)
 
-  var tim = timmar - rasti
-  var mi = min - rastu
+  const tim = timmar - rasti;
+  const mi = min - rastu;
 
   console.log(tim,mi)
   
+  const totalTime = ((tim * 60) + mi)/60;
+
+  console.log(totalTime * lon);
+
+
 
 }
-
 
