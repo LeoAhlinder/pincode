@@ -49,7 +49,8 @@ function validateRequiredFields(requiredFields) {
   return function (req, res, next) {
     for (const field of requiredFields) {
       if (!req.body[field]) {
-        return res.status(400).json({ error: `Missing required field: ${field}` });
+        console.log("WWWW")
+        return res.json({ error: `Missing required field: ${field}` });
       }
     }
     next();
@@ -119,7 +120,7 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
                 }else{
                   if (Typ == 4){
                     res.json({message:"time",lon:lon})
-                  }else
+                  }
                   newData(Typ,namn,data.dag,Tid)
                   res.json({message:"Success"})
                 }

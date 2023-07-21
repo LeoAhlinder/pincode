@@ -48,3 +48,50 @@ describe('Admin Page API', () => {
     // Add more test cases if needed for other scenarios (e.g., error cases)
   });
 });
+
+
+describe('New User API', () => {
+  // Test the "/api/ny-anvandare" POST endpoint
+  describe('POST /api/ny-anvandare', () => {
+    it('should create a new user and return the correct response', (done) => {
+      // Mock request body with the required fields
+      const requestBody = { Namn: 'cat', Kod: '4444', lon: 50000 };
+
+      // Send the request to the app
+      request(app)
+        .post('/api/ny-anvandare')
+        .send(requestBody)
+        .expect(200) // Expect HTTP status code 200
+        .end((err, res) => {
+          if (err) return done(err);
+
+          // Make assertions on the response
+          expect(res.body.message).to.equal('true');
+          expect(res.body.lon).to.equal(requestBody.lon);
+
+          done(); // Callback to indicate the test is complete
+        });
+    });
+
+    it('should return an error if required fields are missing', (done) => {
+      // Mock request body with missing required fields
+      const requestBody = { Namn: 'John Doe' }; // Missing "Kod" and "lon"
+
+      // Send the request to the app
+      request(app)
+        .post('/api/ny-anvandare')
+        .send(requestBody)
+        .expect(500) // Expect HTTP status code 500 for internal server error
+        .end((err, res) => {
+          if (err) return done(err);
+
+          // Make assertions on the response
+          expect(res.body.error).to.equal('Internal server error');
+
+          done(); // Callback to indicate the test is complete
+        });
+    });
+
+    // Add more test cases if needed for other scenarios
+  });
+});
