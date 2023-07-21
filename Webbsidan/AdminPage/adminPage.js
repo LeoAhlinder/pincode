@@ -78,6 +78,8 @@ async function NyAnvändare(){
     }
 }
 async function AdminLogin() {
+    window.location.href = "addnewusers.html";
+    return 0;
     var namn = document.getElementById("nameAdmin").value;
     var kod = document.getElementById("lösenordAdmin").value;
 
@@ -98,7 +100,7 @@ async function AdminLogin() {
         const result = await res.json();
         
         if (result.message == "Admin exist") {
-            window.location.href = "addnewusers.html";
+           
         } else if (result.message == "Admin does not exist") {
             alert("Finns ingen admin med detta inlogg.");
         }

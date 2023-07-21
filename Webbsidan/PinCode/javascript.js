@@ -93,16 +93,17 @@ async function Tid(Typ){
         },
         body: JSON.stringify(data)
       });
+ 
       const response = await res.json();
-        if (response.ok) {
-          // Data stored successfully
-          pinCodeV.value = '';
-          pinCodeNumbers = 0;
-        }  else if (response.message == "newTable"){
+      console.log(response.message)
+        if (response.message == "newTable"){
           newTable();
+          console.log("new")
+
         }
         else if (response.message == "time"){
           lon(response.lon);
+          console.log("time")
         }
         else {
           // Error storing data

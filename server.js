@@ -5,11 +5,15 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http').createServer(app);
 const morgan = require("morgan");
+const bcrypt = require('bcryptjs');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'Webbsidan', 'PinCode')));
-app.use(morgan("dev"))
+
+
+//app.use(morgan("dev")) for response time
 
   // Serve index.html
 app.get('/', function (req, res) {
@@ -77,13 +81,17 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
     const Tid = data.tid;
     const month = data.month
     const Typ = data.In
+
+    
     const query = "SELECT * FROM personal WHERE Kod = ?";
     connection.query(query, [data.pinCode], function (error, results, fields) {
       if (error) {
         console.log('Error executing SELECT query:', error);
         res.status(500).json({ error: 'Error checking data in the database' });
       } else {
+
         if (results.length > 0) {
+          console.log("data exist in table")
           // Data already exists in the table
           const user = results[0];
           const namn = user.Namn + " " + month;
@@ -91,7 +99,7 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
           
           connection.query("SELECT * FROM ??",[namn],function(error,results){
             if (error){
-
+              console.log("create table")
               res.json({message:"newTable"});
               //If the table does not exist, create it then add the data.
               const columns = [
@@ -132,7 +140,7 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
       }
     });
   });
-
+;
 
 function newData(Typ,namn,dag,Tid)
 {
@@ -181,35 +189,40 @@ function newData(Typ,namn,dag,Tid)
   }
 }
 
-app.post("/api/ny-anvandare",validateRequiredFields(["Namn","Kod","lon"]),function(req,res){
-    const data = req.body;
-    console.log(data.Namn,data.Kod,data.lon)
-    const query = "INSERT INTO personal (namn,kod,lon) VALUES (?,?,?)"
-    connection.query(query,[data.Namn,data.Kod,data.lon],function(error,results,fields){
-      if (error){
+app.post("/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), function(req, res) {
+  const data = req.body;
+  console.log(data.Namn, data.Kod, data.lon);
+
+    const query = "INSERT INTO personal (namn, Kod, lon) VALUES (?, ?, ?)";
+    connection.query(query, [data.Namn, data.Kod, data.lon], function(error, results, fields) {
+      if (error) {
         console.log("Error: ", error);
-      }
-      else{
-        res.json({message:"true",lon:data.lon})
+        return res.status(500).json({ error: "Internal server error" });
+      } else {
+        res.json({ message: "true", lon: data.lon });
       }
     });
-});
+  });;
 
-app.post("/api/adminpage",validateRequiredFields(["namn","kod"]),function(req,res){
-   const admin = req.body;
-   const query = "SELECT * FROM admins WHERE (Namn,Lösenord) = (?,?)"
-   connection.query(query,[admin.namn,admin.kod],function(error,results,fields){
-    if (error){
-      console.log("Error", error)
+
+app.post("/api/adminpage", validateRequiredFields(["namn", "kod"]), function(req, res) {
+  const admin = req.body;
+  const query = "SELECT * FROM admins WHERE Namn = ?";
+
+  connection.query(query, [admin.namn], function(error, results, fields) {
+    if (error) {
+      console.log("Error", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
-    if (results.length > 0){
-      res.json({ message: "Admin exist"});
+
+    if (results.length > 0) {
+      res.json({message:"Admin exist"});
+
+    } else {
+      res.json({ message: "Admin does not exist" });
     }
-    else{
-      res.json({ message: "Admin does not exist"});
-    }
-   })
-})
+  });
+});
   
 app.post("/api/lon",validateRequiredFields(["namn","betalt","datum"]),function(req,res){
   const data = req.body;
