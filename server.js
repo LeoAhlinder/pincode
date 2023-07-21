@@ -119,15 +119,19 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
                 }else{
                   if (Typ == 4){
                     res.json({message:"time",lon:lon})
-                  }
+                  }else
                   newData(Typ,namn,data.dag,Tid)
+                  res.json({message:"Success"})
                 }
               });
             } //Table exist, just insert the data
             else{
               if (Typ == 4){
                 res.json({message:"time",lon:lon})
+              }else{
+                res.json({message:"Success"})
               }
+
               newData(Typ,namn,data.dag,Tid)
             }
           })

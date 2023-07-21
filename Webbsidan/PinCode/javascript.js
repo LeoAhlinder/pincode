@@ -83,7 +83,6 @@ async function Tid(Typ){
       In: Typ
     };
 
-    pInput = "";
     try{
 
       const res = await fetch("api/tid",{
@@ -93,17 +92,26 @@ async function Tid(Typ){
         },
         body: JSON.stringify(data)
       });
+
+      let pinInputV = document.getElementById("pinCode"); 
  
       const response = await res.json();
-      console.log(response.message)
+      console.log(response)
+
+        if (response.message == "Success"){
+          pinInputV.value = "";
+          pinCodeNumbers = 0
+        }
+
         if (response.message == "newTable"){
           newTable();
-          console.log("new")
-
+          pinInputV.value = "";
+          pinCodeNumbers = 0
         }
         else if (response.message == "time"){
           lon(response.lon);
-          console.log("time")
+          pinInputV.value = "";
+          pinCodeNumbers = 0
         }
         else {
           // Error storing data
