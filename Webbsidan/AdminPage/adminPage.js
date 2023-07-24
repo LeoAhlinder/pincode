@@ -78,8 +78,7 @@ async function NyAnvändare(){
     }
 }
 async function AdminLogin() {
-    window.location.href = "addnewusers.html";
-    return 0;
+
     var namn = document.getElementById("nameAdmin").value;
     var kod = document.getElementById("lösenordAdmin").value;
 
