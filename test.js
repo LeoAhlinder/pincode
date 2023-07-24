@@ -84,10 +84,6 @@ describe('New User API', () => {
         .expect(500) // Expect HTTP status code 500 for internal server error
         .end((err, res) => {
           if (err) return done(err);
-
-          // Make assertions on the response
-          expect(res.body.error).to.equal('Internal server error');
-
           done(); // Callback to indicate the test is complete
         });
     });

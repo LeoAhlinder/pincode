@@ -22,14 +22,21 @@ app.get('/', function (req, res) {
 
 // Serve AdminPage
 app.use('/admin', express.static(path.join(__dirname, 'Webbsidan', 'AdminPage')));
-
+//*
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'testnärvaro',
+  host: process.env['db.host'],
+  user: process.env['db.user'],
+  password: process.env['db.password'],
+  database: process.env['db.name'],
 });
-
+/*
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'testnärvaro',
+});
+*/
 
 connection.connect((error) => {
     if(error){
@@ -49,8 +56,7 @@ function validateRequiredFields(requiredFields) {
   return function (req, res, next) {
     for (const field of requiredFields) {
       if (!req.body[field]) {
-        console.log("WWWW")
-        return res.json({ error: `Missing required field: ${field}` });
+        return res.status(500).json({ error: `Missing required field: ${field}` });
       }
     }
     next();
@@ -62,7 +68,6 @@ app.get("/api/personal",validateRequiredFields([]),function(req,res){
     res.send(results)
   })
 })
-
 
 app.post("/api/tabort",validateRequiredFields(['namn']),function(req,res){
   const data = req.body;
@@ -194,7 +199,7 @@ function newData(Typ,namn,dag,Tid)
   }
 }
 
-app.post("/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), function(req, res) {
+app.post("https://pincode-bgqd.onrender.com/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), function(req, res) {
   const data = req.body;
   console.log(data.Namn, data.Kod, data.lon);
 

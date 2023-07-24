@@ -58,7 +58,7 @@ async function NyAnvändare(){
         }
         try {
         console.log(JSON.stringify(data))
-            const res = await fetch("/api/ny-anvandare",{
+            const res = await fetch(" https://pincode-bgqd.onrender.com/api/ny-anvandare",{
                 method: "POST", 
                 headers: {
                     'Accept': 'application/json',
