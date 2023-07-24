@@ -58,7 +58,7 @@ async function NyAnvändare(){
         }
         try {
         console.log(JSON.stringify(data))
-            const res = await fetch(" https://pincode-bgqd.onrender.com/api/ny-anvandare",{
+            const res = await fetch("/api/ny-anvandare",{
                 method: "POST", 
                 headers: {
                     'Accept': 'application/json',
@@ -78,6 +78,7 @@ async function NyAnvändare(){
     }
 }
 async function AdminLogin() {
+
 
     var namn = document.getElementById("nameAdmin").value;
     var kod = document.getElementById("lösenordAdmin").value;

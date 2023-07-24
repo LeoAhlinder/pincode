@@ -199,7 +199,7 @@ function newData(Typ,namn,dag,Tid)
   }
 }
 
-app.post("https://pincode-bgqd.onrender.com/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), function(req, res) {
+app.post("/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), function(req, res) {
   const data = req.body;
   console.log(data.Namn, data.Kod, data.lon);
 
