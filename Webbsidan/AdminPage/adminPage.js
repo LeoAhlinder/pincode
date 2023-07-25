@@ -162,6 +162,9 @@ async function personal(){
 
 }
 
+async function newAdmin(){
+    
+}
 
 async function taBort(namn){
 

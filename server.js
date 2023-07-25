@@ -7,6 +7,8 @@ const http = require('http').createServer(app);
 const morgan = require("morgan");
 const bcrypt = require('bcryptjs');
 
+const saltr = 10;
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -218,6 +220,7 @@ app.post("/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), fu
 app.post("/api/adminpage", validateRequiredFields(["namn", "kod"]), function(req, res) {
   const admin = req.body;
   const query = "SELECT * FROM admins WHERE Namn = ? AND Lösenord = ?";
+
 
   connection.query(query, [admin.namn,admin.kod], function(error, results, fields) {
     if (error) {
