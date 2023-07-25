@@ -22,21 +22,21 @@ app.get('/', function (req, res) {
 
 // Serve AdminPage
 app.use('/admin', express.static(path.join(__dirname, 'Webbsidan', 'AdminPage')));
-//*
+/*
 const connection = mysql.createConnection({
   host: process.env['db.host'],
   user: process.env['db.user'],
   password: process.env['db.password'],
   database: process.env['db.name'],
 });
-/*
+*/
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'password',
   database: 'testnärvaro',
 });
-*/
+
 
 connection.connect((error) => {
     if(error){
