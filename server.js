@@ -217,14 +217,13 @@ app.post("/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), fu
 
 app.post("/api/adminpage", validateRequiredFields(["namn", "kod"]), function(req, res) {
   const admin = req.body;
-  const query = "SELECT * FROM admins WHERE Namn = ?";
+  const query = "SELECT * FROM admins WHERE Namn = ? AND Lösenord = ?";
 
-  connection.query(query, [admin.namn], function(error, results, fields) {
+  connection.query(query, [admin.namn,admin.kod], function(error, results, fields) {
     if (error) {
       console.log("Error", error);
       return res.status(500).json({ message: "Internal server error" });
     }
-
     if (results.length > 0) {
       res.json({message:"Admin exist"});
 

@@ -73,7 +73,7 @@ async function NyAnvändare(){
                 window.location.reload();
             }
          }catch{
-            console.error(error)
+            console.log(error)
          }
     }
 }
@@ -100,6 +100,7 @@ async function AdminLogin() {
         const result = await res.json();
         
         if (result.message == "Admin exist") {
+            window.location.href = "addnewusers.html"
            
         } else if (result.message == "Admin does not exist") {
             alert("Finns ingen admin med detta inlogg.");
@@ -135,24 +136,23 @@ async function personal(){
 
         }
 
-        var personalContainer = document.getElementById("personal"); // Get the container element
+        var personalContainer = document.getElementById("personal"); 
 
         for (let i = 0; i < personal.length; i++) {
-            var elementContainer = document.createElement("div"); // Create a container for each element and button
-            var elementText = document.createTextNode(personal[i]); // Create a text node with the element value
+            var elementContainer = document.createElement("div"); 
+            var elementText = document.createTextNode(personal[i]);
+            var button = document.createElement("button"); 
+            button.innerHTML = "Ta Bort"; 
             
-            var button = document.createElement("button"); // Create a button element
-            button.innerHTML = "Ta Bort"; // Set the button's text
-            
-            // Add event listener to the button
+  
             button.addEventListener("click", function() {
                 taBort(personal[i])
             });
 
-            elementContainer.appendChild(elementText); // Append the element text to the container
-            elementContainer.appendChild(button); // Append the button to the container
+            elementContainer.appendChild(elementText); 
+            elementContainer.appendChild(button); 
             elementContainer.classList.add("button")
-            personalContainer.appendChild(elementContainer); // Append the container to the main container
+            personalContainer.appendChild(elementContainer); 
         }
 
 
