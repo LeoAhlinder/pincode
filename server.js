@@ -217,6 +217,12 @@ app.post("/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), fu
   });;
 
 
+app.get("/api/admins",validateRequiredFields([]),function(req,res){
+  connection.query("SELECT * FROM admins",function(error,results){
+    res.json(results)
+  })
+})
+
 app.post("/api/newadmin",validateRequiredFields(["namn","kod"]),function(req,res){
   const admin = req.body;
   const query = "INSERT INTO admins (Namn, Lösenord) VALUES (?, ?)";

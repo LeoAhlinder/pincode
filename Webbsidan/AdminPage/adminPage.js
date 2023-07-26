@@ -1,3 +1,4 @@
+
 async function NyAnvändare(){
 
     var today = new Date();
@@ -123,6 +124,7 @@ async function personal(){
         
         const response = await res.json()
 
+
         var personal = [];
 
         for (let i = 0;i < response.length;i++){
@@ -157,13 +159,26 @@ async function personal(){
 
 
         }catch (error){
-        console.log(error)
+        console.error(error)
     }
 
 }
 
 async function adminsdisplay(){
-    
+
+    try{
+        const res = await fetch("/api/admins",{
+            method:"GET",
+            headers:{ 'Accept': 'application/json'},
+        });
+
+        const respone = await res.json();
+
+        console.log(respone)
+
+    }catch{
+        console.log(error)
+    }
 }
 
 async function newAdmin(){
@@ -171,24 +186,31 @@ async function newAdmin(){
     let namn = document.getElementById("name").value;
     let kod = document.getElementById("kod").value;
 
-    const data = {
-        namn:namn,
-        kod:kod
+    
+    try{
+
+        const data = {
+            namn:namn,
+            kod:kod
+        }
+        
+        const res = await fetch("/api/newadmin",{
+            method:"POST",
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const response = await res.json()
+
+        if (response.message = "Admin created"){
+            window.location.reload();
+        }
     }
-
-    const res = await fetch("/api/newadmin",{
-        method:"POST",
-        headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-
-    const response = await res.json()
-
-    if (response.message = "Admin created"){
-        window.location.reload();
+    catch{
+        console.error(error)
     }
 }
 

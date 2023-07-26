@@ -87,7 +87,38 @@ describe('New User API', () => {
           done(); // Callback to indicate the test is complete
         });
     });
-
     // Add more test cases if needed for other scenarios
+  });
+});
+
+describe("new Admin",() =>{
+  describe("POST /api/newadmin",() =>{
+    it("should create admin with corresponing data", (done) =>{
+    //Data i want to send in for testing
+    const data = {namn: "Leo",kod:"8"};
+
+    request(app)
+      .post("/api/newadmin")
+      .send(data)
+      .expect(200)
+      .end((err,res)=>{
+        if (err) return done(err);
+
+        expect(res.body.message).to.equal("Admin created");
+        done();
+      });
+    });
+    it("should return error if not all fields present",(done) =>{
+      const data = {namn: "Leo"}
+
+    request(app)
+      .post("/api/newadmin")
+      .send(data)
+      .expect(500)
+      .end((err,res)=>{
+        if (err) return done(err);
+        done();
+      });
+    });
   });
 });
