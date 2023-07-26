@@ -6,12 +6,26 @@
   <script src="javascript.js"></script>
 
 </head>
-<body>
+<body onload="borja()">
   <button onclick="openAdminPage()">Admin</button>
 
   <script>
     function openAdminPage() {
       window.location.href = "/admin/adminpage.html";
+    }
+
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+  }
+
+    function borja(){
+      if (isMobileDevice()){
+        console.log("phone")
+      }
+      else{
+        console.log("comp")
+      }
     }
   </script>
   <div class="container" type="button">
