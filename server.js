@@ -217,6 +217,22 @@ app.post("/api/ny-anvandare", validateRequiredFields(["Namn", "Kod", "lon"]), fu
   });;
 
 
+app.post("/api/newadmin",validateRequiredFields(["namn","kod"]),function(req,res){
+  const admin = req.body;
+  const query = "INSERT INTO admins (Namn, Lösenord) VALUES (?, ?)";
+
+  console.log(admin.namn,admin.kod)
+
+  connection.query(query,[admin.namn,admin.kod],function(error,results){
+    if (error){
+      console.log("error",error)
+    }
+    else{
+      res.json({message:"Admin created"});
+    }
+  })
+})
+
 app.post("/api/adminpage", validateRequiredFields(["namn", "kod"]), function(req, res) {
   const admin = req.body;
   const query = "SELECT * FROM admins WHERE Namn = ? AND Lösenord = ?";

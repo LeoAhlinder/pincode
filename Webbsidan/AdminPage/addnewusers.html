@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nya Personer</title>
 </head>
-<body onload="personal()">
+<body onload="personal()"onload="admin()">
     <label for="fname">Namn:</label>
     <input type="text" id="name"><br><br>
     <label for="lname">Kod:</label>
@@ -19,7 +19,8 @@
     <button onclick="tb()">Tillbaka</button>
     <br><br>
     <button onclick="newAdmin()">Ny admin</button>
-    <p class="personal" id="personal"></p>
+    <p class="personal" id="personal">Personal</p>
+    <p id="admin" class="admin">Admins</p>
 
     <script>
         function tb(){

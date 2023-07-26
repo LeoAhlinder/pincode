@@ -163,7 +163,29 @@ async function personal(){
 }
 
 async function newAdmin(){
-    
+
+    let namn = document.getElementById("name").value;
+    let kod = document.getElementById("kod").value;
+
+    const data = {
+        namn:namn,
+        kod:kod
+    }
+
+    const res = await fetch("/api/newadmin",{
+        method:"POST",
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const response = await res.json()
+
+    if (response.message = "Admin created"){
+        window.location.reload();
+    }
 }
 
 async function taBort(namn){

@@ -33,3 +33,10 @@
   margin-left: 8px;
   display: block;
 }
+
+.admin{
+  right: 0;
+  position: absolute;
+  margin: 50px;
+  margin-top: 0px;
+}
