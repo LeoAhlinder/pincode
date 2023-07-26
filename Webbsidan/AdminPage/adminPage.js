@@ -162,6 +162,10 @@ async function personal(){
 
 }
 
+async function adminsdisplay(){
+    
+}
+
 async function newAdmin(){
 
     let namn = document.getElementById("name").value;
