@@ -1,3 +1,4 @@
+const { buffer } = require("stream/consumers");
 
 async function NyAnvändare(){
 
@@ -124,7 +125,6 @@ async function personal(){
         
         const response = await res.json()
 
-
         var personal = [];
 
         for (let i = 0;i < response.length;i++){
@@ -138,14 +138,15 @@ async function personal(){
 
         }
 
-        var personalContainer = document.getElementById("personal"); 
+        const personalContainer = document.getElementById("personal"); 
 
         for (let i = 0; i < personal.length; i++) {
-            var elementContainer = document.createElement("div"); 
-            var elementText = document.createTextNode(personal[i]);
-            var button = document.createElement("button"); 
+            const elementContainer = document.createElement("div"); 
+            const elementText = document.createTextNode(personal[i]);
+            const button = document.createElement("button"); 
+            const lönInput = document.createElement("input")
             button.innerHTML = "Ta Bort"; 
-            
+            elementContainer.setAttribute("id",personal[i])
   
             button.addEventListener("click", function() {
                 taBort(personal[i])
@@ -153,6 +154,7 @@ async function personal(){
 
             elementContainer.appendChild(elementText); 
             elementContainer.appendChild(button); 
+            elementContainer.appendChild(lönInput)
             elementContainer.classList.add("button")
             personalContainer.appendChild(elementContainer); 
         }
@@ -174,11 +176,35 @@ async function adminsdisplay(){
 
         const respone = await res.json();
 
-        console.log(respone)
+        let admins = [];
 
-    }catch{
+        for (let i = 0;i < respone.length;i++){
+            const obj = respone[i]
+
+            for (let key in obj){
+                if (obj.hasOwnProperty(key)){
+                    admins.push(obj[key])
+                }
+            }
+        }
+
+        const adminContainer = document.getElementById("admin")
+        for (let i = 0;i<admins.length;i++){
+            const elementContainer = document.createElement("div")
+            const elementText = document.createTextNode(admins[i])
+
+            elementContainer.appendChild(elementText)
+            elementContainer.classList.add("button");
+            adminContainer.appendChild(elementContainer)
+
+        }
+
+
+    }catch(error){
         console.log(error)
     }
+
+    
 }
 
 async function newAdmin(){
@@ -209,7 +235,7 @@ async function newAdmin(){
             window.location.reload();
         }
     }
-    catch{
+    catch(error){
         console.error(error)
     }
 }
@@ -229,10 +255,16 @@ async function taBort(namn){
 
     const response = await res.json()
 
-    console.log(response.message);
-
     if (response.message == "user deleted"){
-        window.location.reload();
+        const element = document.getElementById(namn);
+
+        console.log(element)
+        if (element){
+            element.remove();
+        }else{
+            alert("error")
+        }
+
     }else{
         alert("Error")
     }
