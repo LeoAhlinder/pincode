@@ -9,12 +9,10 @@ function PIN(number) {
     pinInput.value = currentPin.slice(0, -1);
     if (pinCodeNumbers > 0){
       pinCodeNumbers--;
-      console.log(pinInput.value)
     }
   } else if (pinCodeNumbers < 4) {
     pinCodeNumbers++;
     pinInput.value = currentPin + number;
-    console.log(pinInput.value);
     code = pinInput.value;
   }
 }
@@ -96,15 +94,15 @@ async function Tid(Typ){
       let pinInputV = document.getElementById("pinCode"); 
  
       const response = await res.json();
-      console.log(response)
 
-        if (response.message == "Success"){
+
+        if (response.message == "newTable"){
+          newTable();
           pinInputV.value = "";
           pinCodeNumbers = 0
         }
 
-        if (response.message == "newTable"){
-          newTable();
+        if (response.message == "Success"){
           pinInputV.value = "";
           pinCodeNumbers = 0
         }
@@ -126,6 +124,7 @@ async function Tid(Typ){
 
 async function lon(lon){
 
+  console.log("LÖn")
   let today = new Date();
   let day = today.getDate(); 
 
@@ -165,13 +164,14 @@ async function lon(lon){
 
   const betalt = totalTime * lon;
 
+  console.log(betalt,time.borjade,time.slutade)
   var data = {
     betalt:betalt,
     datum: day,
     namn,namn
   }
 
-  const resp = await fetch("/api/lon",{
+  await fetch("/api/lon",{
     method:"POST",
     headers:{
       'Accept': 'application/json',
@@ -179,9 +179,7 @@ async function lon(lon){
     },
     body: JSON.stringify(data)
   });
-  const svar = resp.json();
 
-  console.log(svar)
 
 }
 

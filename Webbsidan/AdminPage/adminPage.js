@@ -1,5 +1,3 @@
-const { buffer } = require("stream/consumers");
-
 async function NyAnvändare(){
 
     var today = new Date();
@@ -257,8 +255,6 @@ async function taBort(namn){
 
     if (response.message == "user deleted"){
         const element = document.getElementById(namn);
-
-        console.log(element)
         if (element){
             element.remove();
         }else{

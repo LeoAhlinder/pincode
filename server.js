@@ -99,8 +99,7 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
       } else {
 
         if (results.length > 0) {
-          console.log("data exist in table")
-          // Data already exists in the table
+          console.log("the person exist")
           const user = results[0];
           const namn = user.Namn + " " + month;
           const lon = user.lon;
@@ -134,13 +133,15 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
               });
             } //Table exist, just insert the data
             else{
-              if (Typ == 4){
-                res.json({message:"time",lon:lon})
-              }else{
-                res.json({message:"Success"})
-              }
+      
+                if (Typ === 4){
+                  res.json({message:"time",lon:lon})
+                }else{
+                  res.json({message:"Success"})
+                }
 
-              newData(Typ,namn,data.dag,Tid)
+                newData(Typ,namn,data.dag,Tid)
+
             }
           })
           
@@ -164,6 +165,19 @@ function newData(Typ,namn,dag,Tid)
            
   });
   }else if (Typ == 2){
+    //Check if user already has started their break
+    connection.query("SELECT börjaderast FROM ??",[namn],function(error,results){
+      if (error){
+        console.log(error)
+      }
+      else if (results.length > 0){
+        console.log("user has started break already")
+      }
+      else{
+        console.log("hasnt started break already")
+      }
+
+    })
     connection.query("UPDATE ?? SET börjaderast = ? WHERE datum = ?",[namn,Tid,dag],function(error){
       if (error){
         console.log(error)
@@ -193,6 +207,7 @@ function newData(Typ,namn,dag,Tid)
             const time = results[0];
             app.get("/api/time",function(req,res){
               res.json({message:time,namn:namn})
+
             });
           }
         });
