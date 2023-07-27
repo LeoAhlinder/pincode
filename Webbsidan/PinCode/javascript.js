@@ -124,7 +124,6 @@ async function Tid(Typ){
 
 async function lon(lon){
 
-  console.log("LÖn")
   let today = new Date();
   let day = today.getDate(); 
 
@@ -138,29 +137,35 @@ async function lon(lon){
   const response = await res.json()
 
   const namn = response.namn;
-  const time = {
+  var time = {
     borjade: response.message.började,
     rastIn: response.message.börjaderast,
     rastUt:response.message.slutaderast,
     slutade:response.message.slutade
   }
 
-  let t = time.borjade.split(":");
-  let s = time.slutade.split(":");
-  let timmar = (parseInt(s[0]) - 1 - parseInt(t[0]));
-  let min = (parseInt(s[1]) + 60  - parseInt(t[1]));
+  var t = time.borjade.split(":");
+  var s = time.slutade.split(":");
+  var timmar = (parseInt(s[0]) - 1 - parseInt(t[0]));
+  var min = (parseInt(s[1]) + 60  - parseInt(t[1]));
+  if (time.rastUt != null && time.rastIn != null)
+  {
+    var x = time.rastIn.split(":");
+    var z = time.rastUt.split(":");
+    var rasti = (parseInt(z[0]) - 1 - parseInt(x[0]));
+    var rastu = (parseInt(z[1]) + 60  - parseInt(x[1]));
 
-  let x = time.rastIn.split(":");
-  let z = time.rastUt.split(":");
-  let rasti = (parseInt(z[0]) - 1 - parseInt(x[0]));
-  let rastu = (parseInt(z[1]) + 60  - parseInt(x[1]));
+    var tim = timmar - rasti;
+    var mi = min - rastu;
+
+    var totalTime = ((tim * 60) + mi)/60;
 
 
-  const tim = timmar - rasti;
-  const mi = min - rastu;
+  }
+  else{
+    var totalTime = ((timmar * 60) + min)/60;
+  }
 
-  
-  const totalTime = ((tim * 60) + mi)/60;
 
   const betalt = totalTime * lon;
 
@@ -168,7 +173,7 @@ async function lon(lon){
   var data = {
     betalt:betalt,
     datum: day,
-    namn,namn
+    namn,namn 
   }
 
   await fetch("/api/lon",{
