@@ -123,14 +123,25 @@ async function personal(){
         
         const response = await res.json()
 
-        var personal = [];
+        const personal = [];
+        const lön = [];
+        const kodlista = [];
 
         for (let i = 0;i < response.length;i++){
-            const obj = response[i]
-
-            for (let key in obj){
-                if (obj.hasOwnProperty(key)){
-                    personal.push(obj[key])
+            const obj = response[i]  
+            for (let key in obj)
+            {
+                if (key === "Namn")
+                {    
+                    if (obj.hasOwnProperty(key)){
+                        personal.push(obj[key])
+                    }
+                }
+                else if(key === "lon"){
+                    lön.push(obj[key])
+                }
+                else if (key === "Kod"){
+                    kodlista.push(obj[key])
                 }
             }
 
@@ -141,19 +152,40 @@ async function personal(){
         for (let i = 0; i < personal.length; i++) {
             const elementContainer = document.createElement("div"); 
             const elementText = document.createTextNode(personal[i]);
-            const button = document.createElement("button"); 
-            const lönInput = document.createElement("input")
-            button.innerHTML = "Ta Bort"; 
+            const Removebutton = document.createElement("button"); 
+            const lonButton = document.createElement("button")
+            const kodButton = document.createElement("button")
+            const lönInput = document.createElement("input").setAttribute("id","lonInput")
+            const CurrentLön = " Lön: " + lön[i]
+            lönInput.setAttribute("placeholder","Byt lön")
+            const Currentkod = " Kod: " + kodlista[i]
+            const kodInput = document.createElement("input").setAttribute("id","kodInput");
+            kodInput.setAttribute("placeholder","Byt Kod")
+            Removebutton.innerHTML = "Ta Bort"; 
+            lonButton.innerHTML = "Byt"
+            kodButton.innerHTML = "Byt"
             elementContainer.setAttribute("id",personal[i])
   
-            button.addEventListener("click", function() {
+            Removebutton.addEventListener("click", () => {
                 taBort(personal[i])
             });
+            kodButton.addEventListener("click",() =>{
+                let kod = document.getElementById("kodInput").value;
+                bytKod(personal[i],kod)
+            });
+            lonButton.addEventListener("click",() =>{
+                bytLon(personal[i])
+            });
 
-            elementContainer.appendChild(elementText); 
-            elementContainer.appendChild(button); 
+            elementContainer.appendChild(elementText);
+            elementContainer.append(CurrentLön) 
+            elementContainer.append(Currentkod)
             elementContainer.appendChild(lönInput)
+            elementContainer.appendChild(lonButton)
+            elementContainer.appendChild(kodInput)
+            elementContainer.appendChild(kodButton)
             elementContainer.classList.add("button")
+            elementContainer.appendChild(Removebutton); 
             personalContainer.appendChild(elementContainer); 
         }
 
@@ -161,6 +193,45 @@ async function personal(){
         }catch (error){
         console.error(error)
     }
+
+}
+
+async function bytLon(namn){
+
+    const res = await fetch("/api/tabort",{
+        method:"POST",
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({namn: namn})
+
+    });
+
+    const response = await res.json()
+
+}
+
+async function bytKod(namn,kod){
+
+    const data = {
+        namn: namn,
+        kod:kod
+    }
+
+    const res = await fetch("/api/bytkod",{
+        method:"POST",
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({data})
+
+    });
+
+    const response = await res.json()
+
+    console.log(response)
 
 }
 
@@ -240,7 +311,6 @@ async function newAdmin(){
 
 async function taBort(namn){
 
-    console.log(namn)
     const res = await fetch("/api/tabort",{
         method:"POST",
         headers:{

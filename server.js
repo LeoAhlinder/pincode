@@ -66,7 +66,7 @@ function validateRequiredFields(requiredFields) {
 }
 
 app.get("/api/personal",validateRequiredFields([]),function(req,res){
-  connection.query("SELECT Namn FROM personal",function(error,results){
+  connection.query("SELECT Namn,Kod,lon FROM personal",function(error,results){
     res.send(results)
   })
 })
@@ -278,6 +278,13 @@ app.post("/api/lon",validateRequiredFields(["namn","betalt","datum"]),function(r
     if (error){
       console.log(error)
     }
+  })
+})
+
+app.post("/api/bytkod",function(req,res){
+  const data = req.body;
+  connection.query("UPDATE personal SET Kod = ? WHERE Namn = ?",[data.kod,data.namn],function(error,results){
+    
   })
 })
 
