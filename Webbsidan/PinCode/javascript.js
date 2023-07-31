@@ -97,7 +97,6 @@ async function Tid(Typ){
 
 
         if (response.message == "newTable"){
-          newTable();
           pinInputV.value = "";
           pinCodeNumbers = 0
         }
@@ -169,7 +168,6 @@ async function lon(lon){
 
   const betalt = totalTime * lon;
 
-  console.log(betalt,time.borjade,time.slutade)
   var data = {
     betalt:betalt,
     datum: day,

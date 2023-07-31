@@ -134,13 +134,35 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
             } //Table exist, just insert the data
             else{
       
-                if (Typ === 4){
-                  res.json({message:"time",lon:lon})
-                }else{
-                  res.json({message:"Success"})
-                }
+                connection.query("SELECT * FROM ?? WHERE datum = ?",[namn,data.dag],function(error,results){
+                  if(error){
+                    console.log(error)
+                  }else{
+                    if (results.length > 0){
+                      console.log("value found")
+                      data.dag = data.dag + "1"
+                      if (Typ === 4){
+                        res.json({message:"time",lon:lon})
+                      }else{
+                        res.json({message:"Success"})
+                      }
+      
+                      newData(Typ,namn,data.dag,Tid)
 
-                newData(Typ,namn,data.dag,Tid)
+                    }else{
+                      console.log("value not found")
+                      if (Typ === 4){
+                        res.json({message:"time",lon:lon})
+                      }else{
+                        res.json({message:"Success"})
+                      }
+      
+                      newData(Typ,namn,data.dag,Tid)
+                    }
+                  }
+                })
+
+                
 
             }
           })
