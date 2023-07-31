@@ -281,10 +281,28 @@ app.post("/api/lon",validateRequiredFields(["namn","betalt","datum"]),function(r
   })
 })
 
-app.post("/api/bytkod",function(req,res){
+app.post("/api/bytlon",validateRequiredFields(["namn","lon"]),function(req,res){
+  const data = req.body;
+  console.log("WE UP")
+  connection.query("UPDATE personal SET lon = ? WHERE Namn = ?",[data.lon,data.namn],function(error,results){
+    if(error){
+      console.log(error)
+    }
+    else{
+      res.json({message:"Changed"});
+    }
+  })
+})
+
+app.post("/api/bytkod",validateRequiredFields(["namn","kod"]),function(req,res){
   const data = req.body;
   connection.query("UPDATE personal SET Kod = ? WHERE Namn = ?",[data.kod,data.namn],function(error,results){
-    
+    if(error){
+      console.log(error)
+    }
+    else{
+      res.json({message:"Changed"});
+    }
   })
 })
 

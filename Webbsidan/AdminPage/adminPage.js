@@ -72,7 +72,7 @@ async function NyAnvändare(){
                 document.getElementById("kod").value = "";
                 window.location.reload();
             }
-         }catch{
+         }catch(error){
             console.log(error)
          }
     }
@@ -155,11 +155,13 @@ async function personal(){
             const Removebutton = document.createElement("button"); 
             const lonButton = document.createElement("button")
             const kodButton = document.createElement("button")
-            const lönInput = document.createElement("input").setAttribute("id","lonInput")
-            const CurrentLön = " Lön: " + lön[i]
+            const lönInput = document.createElement("input")
+            lönInput.setAttribute("id","lonInput" + i);
             lönInput.setAttribute("placeholder","Byt lön")
+            const CurrentLön = " Lön: " + lön[i]
             const Currentkod = " Kod: " + kodlista[i]
-            const kodInput = document.createElement("input").setAttribute("id","kodInput");
+            const kodInput = document.createElement("input")
+            kodInput.setAttribute("id","kodInput" + i);
             kodInput.setAttribute("placeholder","Byt Kod")
             Removebutton.innerHTML = "Ta Bort"; 
             lonButton.innerHTML = "Byt"
@@ -170,11 +172,12 @@ async function personal(){
                 taBort(personal[i])
             });
             kodButton.addEventListener("click",() =>{
-                let kod = document.getElementById("kodInput").value;
+                let kod = document.getElementById("kodInput" + i).value;
                 bytKod(personal[i],kod)
             });
             lonButton.addEventListener("click",() =>{
-                bytLon(personal[i])
+                let lon = document.getElementById("lonInput" + i).value;
+                bytLon(personal[i],lon)
             });
 
             elementContainer.appendChild(elementText);
@@ -196,42 +199,68 @@ async function personal(){
 
 }
 
-async function bytLon(namn){
+async function bytLon(namn,lon){
+    try{
+        const data = {
+            namn: namn,
+            lon:lon
+        }
 
-    const res = await fetch("/api/tabort",{
-        method:"POST",
-        headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({namn: namn})
+        console.log(data)
 
-    });
+        const res = await fetch("/api/bytlon",{
+            method:"POST",
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
 
-    const response = await res.json()
+        const response = await res.json()
+
+        console.log(response.message)
+
+        if(response.message === "Changed"){
+            location.reload()
+        }
+    }
+    catch(error){
+        console.error(error)
+    }
 
 }
 
 async function bytKod(namn,kod){
+    try{
+        const data = {
+            namn: namn,
+            kod:parseInt(kod)
+        }
 
-    const data = {
-        namn: namn,
-        kod:kod
+        console.log(data)
+
+
+        const res = await fetch("/api/bytkod",{
+            method:"POST",
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const response = await res.json()
+
+        console.log(response.message)
+
+        if(response.message === "Changed"){
+            location.reload()
+        }
     }
-
-    const res = await fetch("/api/bytkod",{
-        method:"POST",
-        headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({data})
-
-    });
-
-    const response = await res.json()
-
-    console.log(response)
+    catch(error){
+        console.error(error)
+    }
 
 }
 
@@ -270,7 +299,7 @@ async function adminsdisplay(){
 
 
     }catch(error){
-        console.log(error)
+        console.error(error)
     }
 
     
