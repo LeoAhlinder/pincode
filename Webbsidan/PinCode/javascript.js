@@ -95,12 +95,6 @@ async function Tid(Typ){
  
       const response = await res.json();
 
-
-        if (response.message == "newTable"){
-          pinInputV.value = "";
-          pinCodeNumbers = 0
-        }
-
         if (response.message == "Success"){
           pinInputV.value = "";
           pinCodeNumbers = 0

@@ -99,7 +99,6 @@ app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"])
       } else {
 
         if (results.length > 0) {
-          console.log("the person exist")
           const user = results[0];
           const namn = user.Namn + " " + month;
           const lon = user.lon;
