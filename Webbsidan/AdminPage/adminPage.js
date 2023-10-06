@@ -163,9 +163,9 @@ async function personal(){
             const kodInput = document.createElement("input")
             kodInput.setAttribute("id","kodInput" + i);
             kodInput.setAttribute("placeholder","Byt Kod")
-            Removebutton.innerHTML = "Ta Bort"; 
-            lonButton.innerHTML = "Byt"
-            kodButton.innerHTML = "Byt"
+            Removebutton.innerText = "Ta Bort"; 
+            lonButton.innerText = "Byt"
+            kodButton.innerText = "Byt"
             elementContainer.setAttribute("id",personal[i])
   
             Removebutton.addEventListener("click", () => {
