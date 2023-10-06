@@ -272,10 +272,10 @@ app.post("/api/adminpage", validateRequiredFields(["namn", "kod"]), function(req
   });
 });
   
-app.post("/api/lon",validateRequiredFields(["namn","betalt","datum"]),function(req,res){
+app.post("/api/lon",validateRequiredFields(["namn","totalPay","datum"]),function(req,res){
   const data = req.body;
 
-  connection.query("UPDATE ?? SET betalt = ? WHERE datum = ?",[data.namn,data.betalt,data.datum],function(error,results){
+  connection.query("UPDATE ?? SET betalt = ? WHERE datum = ?",[data.namn,data.totalPay,data.datum],function(error,results){
     if (error){
       console.log(error)
     }

@@ -162,10 +162,10 @@ async function calculatedPay(pay){
   }
 
 
-  const betalt = totalTime * pay;
+  const totalPay = totalTime * pay;
 
   var data = {
-    betalt:betalt,
+    totalPay:totalPay,
     datum: day,
     namn,namn 
   }
