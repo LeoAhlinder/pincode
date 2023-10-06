@@ -81,6 +81,8 @@ async function Tid(Typ){
       In: Typ
     };
 
+    console.log(data)
+
     try{
 
       const res = await fetch("http://localhost:3000/api/log",{
@@ -100,7 +102,7 @@ async function Tid(Typ){
           pinCodeNumbers = 0
         }
         else if (response.message == "time"){
-          lon(response.lon);
+          calculatedPay(response.lon);
           pinInputV.value = "";
           pinCodeNumbers = 0
         }
@@ -115,12 +117,12 @@ async function Tid(Typ){
 }
 
 
-async function lon(lon){
+async function calculatedPay(pay){
 
   let today = new Date();
   let day = today.getDate(); 
 
-  const res = await fetch("/api/time",{
+  const res = await fetch("http://localhost:3000/api/time",{
     method:"GET",
     headers:{
       'Accept': 'application/json',
@@ -160,7 +162,7 @@ async function lon(lon){
   }
 
 
-  const betalt = totalTime * lon;
+  const betalt = totalTime * pay;
 
   var data = {
     betalt:betalt,

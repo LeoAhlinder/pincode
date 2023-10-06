@@ -19,11 +19,9 @@ app.use(bodyParser.json());
 //app.use(morgan("dev")) for response time
 
 
-const corsOptions = {
-  origin: 'http://localhost:5500',
-};
 
-app.use(cors(corsOptions));
+
+app.use(cors());
 
 
 /*
