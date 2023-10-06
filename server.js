@@ -6,24 +6,26 @@ const path = require('path');
 const http = require('http').createServer(app);
 const morgan = require("morgan");
 const bcrypt = require('bcryptjs');
+const cors = require('cors');
+
 
 const saltr = 10;
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'Webbsidan', 'PinCode')));
 
 
 //app.use(morgan("dev")) for response time
 
-  // Serve index.html
-app.get('/', function (req, res) {
- res.sendFile(path.join(__dirname, 'Webbsidan', 'PinCode', 'index.html'));
-});
 
-// Serve AdminPage
-app.use('/admin', express.static(path.join(__dirname, 'Webbsidan', 'AdminPage')));
+const corsOptions = {
+  origin: 'http://localhost:5500',
+};
+
+app.use(cors(corsOptions));
+
+
 /*
 const connection = mysql.createConnection({
   host: process.env['db.host'],
@@ -84,7 +86,7 @@ app.post("/api/tabort",validateRequiredFields(['namn']),function(req,res){
 })
 
 
-app.post('/api/tid',validateRequiredFields(["tid","month","In","pinCode","dag"]), function (req, res) {
+app.post('/api/log',validateRequiredFields(["tid","month","In","pinCode","dag"]), function (req, res) {
     const data = req.body; 
     const Tid = data.tid;
     const month = data.month
@@ -253,6 +255,8 @@ app.post("/api/newadmin",validateRequiredFields(["namn","kod"]),function(req,res
 
 app.post("/api/adminpage", validateRequiredFields(["namn", "kod"]), function(req, res) {
   const admin = req.body;
+
+  console.log("test")
   const query = "SELECT * FROM admins WHERE Namn = ? AND Lösenord = ?";
 
 

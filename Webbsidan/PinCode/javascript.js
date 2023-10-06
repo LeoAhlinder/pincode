@@ -83,7 +83,7 @@ async function Tid(Typ){
 
     try{
 
-      const res = await fetch("api/tid",{
+      const res = await fetch("http://localhost:3000/api/log",{
         method:"POST",
         headers:{
           'Content-Type': 'application/json',

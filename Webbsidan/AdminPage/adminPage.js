@@ -88,8 +88,10 @@ async function AdminLogin() {
         kod: kod
     }
 
+    console.log(data)
+
     try {
-        const res = await fetch("/api/adminpage", {
+        const res = await fetch("http://localhost:3000/api/adminpage", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
