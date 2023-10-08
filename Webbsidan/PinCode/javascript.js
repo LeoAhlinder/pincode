@@ -170,7 +170,7 @@ async function calculatedPay(pay){
     namn,namn 
   }
 
-  await fetch("/api/lon",{
+  await fetch("http://localhost:3000/api/lon",{
     method:"POST",
     headers:{
       'Accept': 'application/json',

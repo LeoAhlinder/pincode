@@ -57,7 +57,6 @@ async function NyAnvändare(){
             lon:lon
         }
         try {
-        console.log(JSON.stringify(data))
             const res = await fetch("/api/ny-anvandare",{
                 method: "POST", 
                 headers: {
@@ -88,7 +87,6 @@ async function AdminLogin() {
         kod: kod
     }
 
-    console.log(data)
 
     try {
         const res = await fetch("http://localhost:3000/api/adminpage", {
@@ -210,8 +208,6 @@ async function bytLon(namn,lon){
             lon:lon
         }
 
-        console.log(data)
-
         const res = await fetch("http://localhost:3000/api/bytlon",{
             method:"POST",
             headers:{
@@ -222,8 +218,6 @@ async function bytLon(namn,lon){
         });
 
         const response = await res.json()
-
-        console.log(response.message)
 
         if(response.message === "Changed"){
             location.reload()
@@ -242,8 +236,6 @@ async function bytKod(namn,kod){
             kod:parseInt(kod)
         }
 
-        console.log(data)
-
 
         const res = await fetch("http://localhost:3000/api/bytkod",{
             method:"POST",
@@ -255,8 +247,6 @@ async function bytKod(namn,kod){
         });
 
         const response = await res.json()
-
-        console.log(response.message)
 
         if(response.message === "Changed"){
             location.reload()
