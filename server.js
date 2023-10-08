@@ -154,18 +154,32 @@ app.post('/api/log',validateRequiredFields(["tid","month","In","pinCode","dag"])
   });
 ;
 
-function newData(Typ,namn,dag,Tid)
+function newData(type,namn,dag,Tid)
 {
+  let currentType = "";
+  switch(type){
+    case 2:
+      currentType = "börjaderast" 
+    break;
+
+    case 3: 
+      currentType = "slutaderast"
+    break;
+
+    case 4:
+      currentType = "slutade"
+    break;
+  }
+
   if (Typ == 1){//Clock In
     connection.query("INSERT INTO ?? (datum,började) VALUES (?,?)",[namn,dag,Tid],function(error){
       if (error){
         console.log(error)
       }
-           
   });
-  }else if (Typ == 2){
+  }else{
     //Check if user already has started their break
-    connection.query("SELECT börjaderast FROM ??",[namn],function(error,results){
+    connection.query(`SELECT ${currentType} FROM ??`,[namn],function(error,results){
       if (error){
         console.log(error)
       }
@@ -177,41 +191,12 @@ function newData(Typ,namn,dag,Tid)
       }
 
     })
-    connection.query("UPDATE ?? SET börjaderast = ? WHERE datum = ?",[namn,Tid,dag],function(error){
+    connection.query(`UPDATE ?? SET ${currentType} = ? WHERE datum = ?`,[namn,Tid,dag],function(error){
       if (error){
         console.log(error)
       }
 
     })
-  }
-  else if (Typ == 3){
-    connection.query("UPDATE ?? SET slutaderast = ? WHERE datum = ?",[namn,Tid,dag],function(error){
-      if (error){
-        console.log(error)
-      }
-
-    })
-  }
-  else if (Typ == 4){//Clock out
-    connection.query("UPDATE ?? SET slutade = ? WHERE datum = ?",[namn,Tid,dag],function(error){
-      if (error){
-        console.log(error)
-      }
-      else{
-        connection.query("SELECT * FROM ?? WHERE datum = ?",[namn,dag],function(error,results){
-          if (error){
-            console.log(error)
-          }
-          else{
-            const time = results[0];
-            app.get("/api/time",function(req,res){
-              res.json({message:time,namn:namn})
-
-            });
-          }
-        });
-      }
-    });
   }
 }
 
