@@ -154,6 +154,7 @@ async function personal(){
         for (let i = 0; i < personal.length; i++) {
             const elementContainer = document.createElement("div"); 
             const elementText = document.createTextNode(personal[i]);
+            const br = document.createElement("br");
             const Removebutton = document.createElement("button"); 
             const lonButton = document.createElement("button")
             const kodButton = document.createElement("button")
@@ -183,6 +184,7 @@ async function personal(){
             });
 
             elementContainer.appendChild(elementText);
+            elementContainer.appendChild(br)
             elementContainer.append(CurrentLön) 
             elementContainer.append(Currentkod)
             elementContainer.appendChild(lönInput)

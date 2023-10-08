@@ -269,7 +269,6 @@ app.post("/api/lon",validateRequiredFields(["namn","totalPay","datum"]),function
 
 app.post("/api/bytlon",validateRequiredFields(["namn","lon"]),function(req,res){
   const data = req.body;
-  console.log("WE UP")
   connection.query("UPDATE personal SET lon = ? WHERE Namn = ?",[data.lon,data.namn],function(error,results){
     if(error){
       console.log(error)
