@@ -81,7 +81,6 @@ async function Tid(Typ){
       In: Typ
     };
 
-    console.log(data)
 
     try{
 
@@ -130,46 +129,39 @@ async function calculatedPay(pay){
     }
   });
   const response = await res.json()
-
+  
   const namn = response.namn;
-  var time = {
-    borjade: response.message.började,
-    rastIn: response.message.börjaderast,
-    rastUt:response.message.slutaderast,
-    slutade:response.message.slutade
+  const borjade = response.message.började;
+  const rastIn = response.message.börjaderast;
+  const rastUt = response.message.slutaderast;
+  const slutade = response.message.slutade;
+  
+  const [borjadeHour, borjadeMin] = borjade.split(":");
+  const [slutadeHour, slutadeMin] = slutade.split(":");
+  const timmar = parseInt(slutadeHour) - parseInt(borjadeHour) - 1;
+  const min = parseInt(slutadeMin) + 60 - parseInt(borjadeMin);
+  
+  let totalTime;
+  
+  if (rastUt !== null && rastIn !== null) {
+    const [rastInHour, rastInMin] = rastIn.split(":");
+    const [rastUtHour, rastUtMin] = rastUt.split(":");
+    const rasti = parseInt(rastUtHour) - parseInt(rastInHour) - 1;
+    const rastu = parseInt(rastUtMin) + 60 - parseInt(rastInMin);
+  
+    totalTime = ((timmar - rasti) * 60 + (min - rastu)) / 60;
+  } else {
+    totalTime = (timmar * 60 + min) / 60;
   }
-
-  var t = time.borjade.split(":");
-  var s = time.slutade.split(":");
-  var timmar = (parseInt(s[0]) - 1 - parseInt(t[0]));
-  var min = (parseInt(s[1]) + 60  - parseInt(t[1]));
-  if (time.rastUt != null && time.rastIn != null)
-  {
-    var x = time.rastIn.split(":");
-    var z = time.rastUt.split(":");
-    var rasti = (parseInt(z[0]) - 1 - parseInt(x[0]));
-    var rastu = (parseInt(z[1]) + 60  - parseInt(x[1]));
-
-    var tim = timmar - rasti;
-    var mi = min - rastu;
-
-    var totalTime = ((tim * 60) + mi)/60;
-
-
-  }
-  else{
-    var totalTime = ((timmar * 60) + min)/60;
-  }
-
-
+  
   const totalPay = totalTime * pay;
-
-  var data = {
-    totalPay:totalPay,
+  
+  const data = {
+    totalPay,
     datum: day,
-    namn,namn 
-  }
-
+    namn,
+  };
+  
   await fetch("http://localhost:3000/api/lon",{
     method:"POST",
     headers:{

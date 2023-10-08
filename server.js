@@ -18,11 +18,7 @@ app.use(bodyParser.json());
 
 //app.use(morgan("dev")) for response time
 
-
-
-
 app.use(cors());
-
 
 /*
 const connection = mysql.createConnection({
