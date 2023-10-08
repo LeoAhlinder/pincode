@@ -154,10 +154,10 @@ app.post('/api/log',validateRequiredFields(["tid","month","In","pinCode","dag"])
   });
 ;
 
-function newData(type,namn,dag,Tid)
+function newData(typ,namn,dag,Tid)
 {
   let currentType = "";
-  switch(type){
+  switch(typ){
     case 2:
       currentType = "börjaderast" 
     break;
@@ -171,7 +171,7 @@ function newData(type,namn,dag,Tid)
     break;
   }
 
-  if (Typ == 1){//Clock In
+  if (typ == 1){//Clock In
     connection.query("INSERT INTO ?? (datum,började) VALUES (?,?)",[namn,dag,Tid],function(error){
       if (error){
         console.log(error)

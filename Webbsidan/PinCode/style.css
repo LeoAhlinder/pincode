@@ -45,9 +45,10 @@ input[type="text"] {
 .grid-item {
   background-color: transparent; /* Transparent background */
   padding: 10px;
-  font-size: 20px;
+  font-size: 2rem;
   text-align: center;
   border: none;
+  font-family: 'AR One Sans', sans-serif;
   outline: none;
 }
 
@@ -66,7 +67,7 @@ input[type="text"] {
   }
 
 .PinButton{
-  background: transparent;
+  background: rgb(12, 12, 199);
   color: white;
   border: none;
   padding: 20px;

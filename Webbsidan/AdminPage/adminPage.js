@@ -114,7 +114,7 @@ async function AdminLogin() {
 
 async function personal(){
     try{
-        const res = await fetch("/api/personal",{
+        const res = await fetch("http://localhost:3000/api/personal",{
             method: "GET",
             headers:{
                 'Accept': 'application/json',
@@ -210,7 +210,7 @@ async function bytLon(namn,lon){
 
         console.log(data)
 
-        const res = await fetch("/api/bytlon",{
+        const res = await fetch("http://localhost:3000/api/bytlon",{
             method:"POST",
             headers:{
                 'Accept': 'application/json',
@@ -243,7 +243,7 @@ async function bytKod(namn,kod){
         console.log(data)
 
 
-        const res = await fetch("/api/bytkod",{
+        const res = await fetch("http://localhost:3000/api/bytkod",{
             method:"POST",
             headers:{
                 'Accept': 'application/json',
@@ -269,7 +269,7 @@ async function bytKod(namn,kod){
 async function adminsdisplay(){
 
     try{
-        const res = await fetch("/api/admins",{
+        const res = await fetch("http://localhost:3000/api/admins",{
             method:"GET",
             headers:{ 'Accept': 'application/json'},
         });
