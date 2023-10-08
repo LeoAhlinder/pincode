@@ -1,6 +1,6 @@
 .login {
-    width: 600px;
-    height: 400px;
+    width: 40%;
+    height: 40%;
     background-color: gray;
     
     position: absolute;
@@ -10,23 +10,35 @@
     right: 0;
     
     margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
   }
 
-.b {
-     
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    
-    margin: auto;
-}
+
 
 #personal{
   margin-left: 10px;
   margin-top: 20px;
   font-weight: bold;
+}
+
+.input{
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid black;
+  width: 60%;
+  height: 10%;
+  font-size: 1rem;
+}
+
+#login{
+  width: 25%;
+  height: 12%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 10px;
 }
 
 .button{
